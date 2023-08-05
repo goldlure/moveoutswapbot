@@ -8,8 +8,9 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-public class MoveOutSwapBot extends TelegramLongPollingBot {
+import com.innagold.utils.ConfigReader;
 
+public class MoveOutSwapBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
@@ -27,24 +28,14 @@ public class MoveOutSwapBot extends TelegramLongPollingBot {
     }
 
     public String getBotToken() {
-        Properties properties = new Properties();
-        try {
-            FileInputStream configFile = new FileInputStream("config.properties");
-            properties.load(configFile);
-            configFile.close();
-            String botToken = properties.getProperty("bot_token");
-            return botToken;
-        } catch (IOException e) {
-            System.err.println("Error reading configuration: " + e.getMessage());
-        }
-        return null;
+        ConfigReader configReader = new ConfigReader();
+        String botToken = configReader.getProperty("bot_token");
+        return botToken;
     }
 
     @Override
     public String getBotUsername() {
         return "MoveOutSwapBot";
     }
-
-    
 
 }
